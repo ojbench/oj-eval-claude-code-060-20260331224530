@@ -12,77 +12,62 @@ public:
 
     // Comparison methods - using only < and == operators
     Validator<T>& ge(const T& other) {
-        if (valid) {
-            // a >= b is equivalent to !(a < b)
-            bool result = !(value < other);
-            if (negate) {
-                result = !result;
-            }
-            valid = valid && result;
+        bool result = !(value < other);
+        if (negate) {
+            result = !result;
         }
+        valid = valid && result;
         return *this;
     }
 
     Validator<T>& le(const T& other) {
-        if (valid) {
-            // a <= b is equivalent to (a < b || a == b)
-            bool result = (value < other) || (value == other);
-            if (negate) {
-                result = !result;
-            }
-            valid = valid && result;
+        bool result = (value < other) || (value == other);
+        if (negate) {
+            result = !result;
         }
+        valid = valid && result;
         return *this;
     }
 
     Validator<T>& gt(const T& other) {
-        if (valid) {
-            // a > b is equivalent to !(a < b || a == b)
-            bool result = !((value < other) || (value == other));
-            if (negate) {
-                result = !result;
-            }
-            valid = valid && result;
+        bool result = !((value < other) || (value == other));
+        if (negate) {
+            result = !result;
         }
+        valid = valid && result;
         return *this;
     }
 
     Validator<T>& lt(const T& other) {
-        if (valid) {
-            bool result = (value < other);
-            if (negate) {
-                result = !result;
-            }
-            valid = valid && result;
+        bool result = (value < other);
+        if (negate) {
+            result = !result;
         }
+        valid = valid && result;
         return *this;
     }
 
     Validator<T>& toBe(const T& other) {
-        if (valid) {
-            bool result = (value == other);
-            if (negate) {
-                result = !result;
-            }
-            valid = valid && result;
+        bool result = (value == other);
+        if (negate) {
+            result = !result;
         }
+        valid = valid && result;
         return *this;
     }
 
     Validator<T>& toBeOneOf(const std::vector<T>& options) {
-        if (valid) {
-            bool found = false;
-            for (typename std::vector<T>::size_type i = 0; i < options.size(); ++i) {
-                if (value == options[i]) {
-                    found = true;
-                    break;
-                }
+        bool found = false;
+        for (typename std::vector<T>::size_type i = 0; i < options.size(); ++i) {
+            if (value == options[i]) {
+                found = true;
+                break;
             }
-            if (negate) {
-                found = !found;
-            }
-            valid = valid && found;
         }
+        if (negate) {
+            found = !found;
+        }
+        valid = valid && found;
         return *this;
     }
 
