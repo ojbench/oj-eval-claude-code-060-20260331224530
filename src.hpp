@@ -10,10 +10,11 @@ private:
 public:
     Validator(const T& val) : value(val), valid(true), negate(false) {}
 
-    // Comparison methods
+    // Comparison methods - using only < and == operators
     Validator<T>& ge(const T& other) {
         if (valid) {
-            bool result = (value >= other);
+            // a >= b is equivalent to !(a < b)
+            bool result = !(value < other);
             if (negate) {
                 result = !result;
             }
@@ -24,7 +25,8 @@ public:
 
     Validator<T>& le(const T& other) {
         if (valid) {
-            bool result = (value <= other);
+            // a <= b is equivalent to (a < b || a == b)
+            bool result = (value < other) || (value == other);
             if (negate) {
                 result = !result;
             }
@@ -35,7 +37,8 @@ public:
 
     Validator<T>& gt(const T& other) {
         if (valid) {
-            bool result = (value > other);
+            // a > b is equivalent to !(a < b || a == b)
+            bool result = !((value < other) || (value == other));
             if (negate) {
                 result = !result;
             }
