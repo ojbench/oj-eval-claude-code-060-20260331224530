@@ -72,7 +72,7 @@ public:
     Validator<T>& toBeOneOf(const std::vector<T>& options) {
         if (valid) {
             bool found = false;
-            for (size_t i = 0; i < options.size(); ++i) {
+            for (typename std::vector<T>::size_type i = 0; i < options.size(); ++i) {
                 if (value == options[i]) {
                     found = true;
                     break;
